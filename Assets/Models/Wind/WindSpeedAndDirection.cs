@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using TMPro;
+using System.Text.RegularExpressions;
 
 public class WindSpeedAndDirection : MonoBehaviour {
     public GameObject windSock;
@@ -33,11 +34,15 @@ public class WindSpeedAndDirection : MonoBehaviour {
             else {
                 string json = webRequest.downloadHandler.text;
                 // print out the weather data to make sure it makes sense
-                Debug.Log(":\nReceived: " + json);
+                Debug.Log(":\nWind Received: " + json);
 
                 //parse wind speed and direction from json
-                int direction = int.Parse(json.Substring(json.IndexOf("deg") + 5, 2));
-                float speed = float.Parse(json.Substring(json.IndexOf("speed") + 7, 4));
+                string degree = Regex.Replace(json.Substring(json.IndexOf("deg") + 5, 3), "[^0-9]+", "");
+                Debug.Log("degree: " + degree);
+                int direction = int.Parse(degree);
+                string s = Regex.Replace(json.Substring(json.IndexOf("speed") + 7, 4), "[^0-9.]+", "");
+                Debug.Log("speed: " + s);
+                float speed = float.Parse(s);
 
                 //set text of wind speed
                 windText.GetComponent<TextMeshPro>().text = speed + " MPH";
