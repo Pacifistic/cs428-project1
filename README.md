@@ -17,6 +17,4 @@ Instructions:
 
 2.) Input vuforia license key in the VuforiaConfiguration file
 
-3.) Change name of the empty object "weather API Key" to your key
-
-4.) Build and run.
+3.) Build and run.
